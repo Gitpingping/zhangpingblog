@@ -28,9 +28,11 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import { RouterView, RouterLink, useRouter } from 'vue-router';
-import { useMessage } from 'naive-ui';
-import Header from './Header.vue';
-import Nav from './Nav.vue';
+import {
+  useMessage,
+} from "naive-ui";
+import Header from './layout-header.vue';
+import Nav from './layout-nav.vue';
 
 export default defineComponent({
   components: {
@@ -41,7 +43,7 @@ export default defineComponent({
     const clickOnSubMenuItem: (route: string) => void = function (route: string): void {
       router.push(route)
     }
-    window['Message'] = useMessage();
+    window["Message"] = useMessage();
     return {
       
     };

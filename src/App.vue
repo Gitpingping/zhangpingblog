@@ -1,39 +1,55 @@
 <script lang="ts">
-import { defineComponent, reactive } from 'vue';
-import { RouterView } from 'vue-router';
-import { NConfigProvider,NDialogProvider,NMessageProvider,zhCN, dateZhCN } from 'naive-ui';
-
+import { defineComponent, reactive } from "vue";
+import { RouterView } from "vue-router";
+import {
+  NConfigProvider,
+  NDialogProvider,
+  NMessageProvider,
+  zhCN,
+  dateZhCN,
+  useMessage,
+} from "naive-ui";
 export default defineComponent({
   components: {
-    RouterView, NConfigProvider,NDialogProvider,NMessageProvider
+    RouterView,
+    NConfigProvider,
+    NDialogProvider,
+    NMessageProvider,
   },
   setup() {
     // This starter template is using Vue 3 <script setup> SFCs
     // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
     const themeOverrides = reactive({
       common: {
-        primaryColor: '#37baa0',
-        primaryColorHover: '#37baa8d4',
-        primaryColorPressed: '#37baa0',
-        errorColor: '#F56C6C',
-        errorColorHover: '#F56C68d4',
-        errorColorPressed: '#F56C6C',
+        primaryColor: "#37baa0",
+        primaryColorHover: "#37baa8d4",
+        primaryColorPressed: "#37baa0",
+        errorColor: "#F56C6C",
+        errorColorHover: "#F56C68d4",
+        errorColorPressed: "#F56C6C",
       },
-    })
+    });
+    // window["Message"] = useMessage();
     return {
-      themeOverrides,zhCN, dateZhCN
+      themeOverrides,
+      zhCN,
+      dateZhCN,
     };
   },
 });
 </script>
 
 <template>
-  <n-config-provider :theme-overrides="themeOverrides" :locale="zhCN" :date-locale="dateZhCN">
-    <n-dialog-provider>
-      <n-message-provider>
+  <n-config-provider
+    :theme-overrides="themeOverrides"
+    :locale="zhCN"
+    :date-locale="dateZhCN"
+  >
+    <n-message-provider>
+      <n-dialog-provider>
         <RouterView />
-      </n-message-provider>
-    </n-dialog-provider>
+      </n-dialog-provider>
+    </n-message-provider>
   </n-config-provider>
 </template>
 

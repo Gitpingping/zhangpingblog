@@ -35,7 +35,7 @@ export const service: AxiosInstance = axios.create({
     // `transformResponse` 在传递给 then/catch 前，允许修改响应数据
     transformResponse: [function (data) {
         // 对 data 进行任意转换处理
-        return data;
+        return JSON.parse(data);
 
     }],
     // `headers` 是即将被发送的自定义请求头
@@ -69,15 +69,34 @@ service.interceptors.request.use(
         return Promise.reject(error);
     }
 );
-
+export interface ResponseData {
+    success: boolean,
+    data: any,
+    message?: string, 
+    errMsg?: string
+}
 service.interceptors.response.use(
-    response => {
-        if (response.status === 200) {
-            return response.data;
+    (response) => {
+        const data:ResponseData = response.data;
+        const { Message } = window as any;
+        if (response.status === 200 && data.success) {
+            if(data.data){
+                if(Boolean(data.message)){
+                    Message.success(data.message);
+                }
+                return data.data
+            }else{
+                Message.success(data.message)
+            }
         }
-        return response;
+        if (response.status === 200 && !data.success) {
+            Message.error(data.errMsg)
+            throw new Error(data.errMsg)
+        }
+        // return data;
     },
     ({response}) => {
+        console.log('错误');
         const { Message } = window as any;
         if(Message){
             if(!response){

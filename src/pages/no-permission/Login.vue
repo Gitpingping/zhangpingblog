@@ -31,8 +31,7 @@ export default defineComponent({
       useLoginCode.call(store);
     }
     onMounted(() => {
-      useLoginCode.call(store);
-      console.log(router.getRoutes());
+      // useLoginCode.call(store);
     });
     // Store
     const store: Store<any> = useStore();
@@ -52,7 +51,7 @@ export default defineComponent({
     
 
     const message = useMessage();
-
+    window["Message"] = message;
     // 点击登录
     function login() {
       // formCase.validate().then((result: LoginForm) => {
@@ -66,26 +65,25 @@ export default defineComponent({
       formRef.value.validate((errors: Error) => {
         if (!errors) {
           // localStorage.setItem("jwtoken", "zhangpingcloud");
-          message.loading("登录中");
-          message.success("登录成功");
-              localStorage.setItem("jwtoken", 'token');
-              store.commit(ADDROUTE)
-              router.replace("/");
-          // store
-          //   .dispatch(LOGIN, loginInfo)
-          //   .then((res: LoginResponse<LoginResponseUser>) => {
-          //     message.success("登录成功");
-          //     localStorage.setItem("jwtoken", res.token);
-          //     localStorage.setItem("user", JSON.stringify(res.user));
+          // message.loading("登录中");
+          // message.success("登录成功");
+          //     localStorage.setItem("jwtoken", 'token');
           //     store.commit(ADDROUTE)
           //     router.replace("/");
-          //   })
-          //   .catch((err) => {
-          //     queryLoginCode();
-          //     message.destroyAll();
-          //     message.error(err.message);
-          //   })
-          //   .finally(() => {});
+          store
+            .dispatch(LOGIN, loginInfo)
+            .then((res: LoginResponse<LoginResponseUser>) => {
+              localStorage.setItem("jwtoken", res.jwtoken);
+              // localStorage.setItem("user", JSON.stringify(res.user));
+              store.commit(ADDROUTE);
+              router.replace("/");
+            })
+            .catch((err) => {
+              // queryLoginCode();
+              message.destroyAll();
+              message.error(err.message);
+            })
+            .finally(() => {});
         } else {
           console.log(errors);
         }

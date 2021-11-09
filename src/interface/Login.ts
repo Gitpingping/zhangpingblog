@@ -13,21 +13,21 @@ export interface LoginForm {
 // 登录请求参数
 export interface LoginParams {
     // 用户名
-    username: string,
+    user_name: string,
     // 密码
     password: string,
     // 记住密码
     remember?: boolean,
     // 验证码
-    code: string,
+    code?: string,
     // 登录验证码(可删)
-    uuid: string
+    uuid?: string
 }
 
 // 登录返回
 export interface LoginResponse<T>{
-    token: string,
-    user: T
+    jwtoken: string,
+    user?: T
 }
 
 // 登录返回用户信息

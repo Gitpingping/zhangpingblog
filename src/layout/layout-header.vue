@@ -7,6 +7,7 @@ import { useDialog } from 'naive-ui';
 import { permissionRoute } from '@/router/permission';
 import {BreadCrumb} from '@/layout/components';
 export default defineComponent({
+    name: 'Header',
     components: {
         LogInOutline, NotificationsOutline, SettingsOutline,LogoGithub,BreadCrumb
     },
